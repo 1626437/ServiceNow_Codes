@@ -15,6 +15,26 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         g_form.setValue('u_callback_number', caller.phone);
  }
 
+ //***************************************************************************************************************************************
+//Preenche Requested For com o Caller do catalogo
+function onBefore(current, previous) {
+   updateReqFor();
+   //NEED TO CHANGE IF WE HAVE SHOPPING CART
+   // Update Requested For
+   function updateReqFor() {
+       var req = new GlideRecord('sc_req_item');
+       req.addQuery('request', current.sys_id);
+       req.setLimit(1);
+       req.query();
+       while (req.next()) {
+           current.requested_for = req.variables.u_caller;
+           current.short_description = req.short_description;
+           current.description = req.description;
+           //current.short_description = req.short_description;
+       }
+   }
+}
+
 //***************************************************************************************************************************************
 //Altera o conteúdo do campo para Upper Case
 function onChange(control, oldValue, newValue, isLoading, isTemplate) {

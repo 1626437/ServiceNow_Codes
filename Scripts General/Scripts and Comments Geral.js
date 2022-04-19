@@ -6,7 +6,7 @@ current.update();
 gs.addInfoMessage(gs.getMessage('Impacted Areas Updated'));
 action.setRedirectURL(current); 
 //***************************************************************************************************************************************
-//Evidencia usuário VIP 
+/*Evidencia usuário VIP 
 Personalize Style(botão direita label)
 TABLE: <tablename>
 FIELD: <caller>
@@ -16,7 +16,7 @@ background-image: url('images/icons/vip.gif');
 background-repeat: no-repeat;
 background-position: 98% 5px;
 padding-right: 30px;
-***************************************************************************************************************************************
+***************************************************************************************************************************************/
 //Identificar problema com CMDB, visualização congelada quando criado errado nesse caso a tabela u_firewall não existia
 select sys_id, sys_class_name, name, sys_updated_by, sys_updated_on, sys_created_by, sys_created_on from cmdb_ci where sys_class_name = ‘u_firewall'
 Only 1 record seems to be involved:
@@ -38,14 +38,12 @@ gs.sql("DELETE FROM cmdb_ci_netgear WHERE sys_id = '6254dea20f187100ea81a218b105
 //Para pegar a ClassName da tabela task
 current.getRecordClassName() == 'incident' || current.getRecordClassName() == 'problem'
 
-***************************************************************************************************************************************
-
-***************************************************************************************************************************************
+//***************************************************************************************************************************************
 //SCRIPT INCLUDE para filtrar um campo reference através de um campo choice associado a mesma tabela do reference.
 function filterSublocation(){
      return 'u_macro_location=‘(campo usado para referenciar através do) + current.u_location;
 }
-***************************************************************************************************************************************
+//***************************************************************************************************************************************
 //Preenche empresa e comentários para um requested item. Business Rule executando em insert na tabela sc_req_item
 if (current.variables.company != '' && current.variables.company != undefined)
 current.company = current.variables.company;
@@ -55,18 +53,18 @@ if (current.variables.short_description != '' && current.variables.short_descrip
 current.short_description = current.variables.short_description;
 if (current.variables.description != '' && current.variables.description != undefined)
 current.description = current.variables.description;
-***************************************************************************************************************************************
+//***************************************************************************************************************************************
 //Deleção em massa através de background script.
 var gr = new GlideRecord('cmdb_ci');
 gr.addQuery(’sys_class_name', 'cmdb_ci');
 gr.query();
 gr.deleteMultiple();
 
-***************************************************************************************************************************************
+//***************************************************************************************************************************************
 //Chamar um mail script na notificação
 ${mail_script:sapReplyTo}
 ${mail_script:attach_links}
-***************************************************************************************************************************************
+//***************************************************************************************************************************************
 //Filtra Grupos em Fluxos
 var userRegion = current.u_requester.location.u_region.toString();
 var userSubRegion = current.u_requester.location.u_sub_region.toString();
@@ -100,7 +98,7 @@ if (userRegion == '') {
      }
 }
 
-***************************************************************************************************************************************
+//***************************************************************************************************************************************
 //Preenche Requested For com usuário solicitante selecionado na Requested Item
 updateReqFor();
 //NEED TO CHANGE IF WE HAVE SHOPPING CART
@@ -125,7 +123,7 @@ function onChange(control, oldValue, newValue, isLoading) {
           g_form.setValue('question_abastece_problema_parcial_q_6','');
      }
 }
-***************************************************************************************************
+//***************************************************************************************************
 //Client Script/Ajax para preencher um campo com o DisplayValue e não com o sys_id (value);
      var caller = g_form.getDisplayValue('variables.u_caller');
      var ga = new GlideAjax('getUserInfo');
@@ -163,32 +161,30 @@ alert(ga.getAnswer());
                     item.hide();
                }
           });
-***********************************************************************************************************************
+//***********************************************************************************************************************
 //Atualização de múltiplos registros através de Scripts - Background
-notification=69313ec90f820200c816945f62050e89
-u_cpfISNOTEMPTY^u_birth_dateISNOTEMPTY
-*UPDATE*
-var updateCI = new GlideRecord(’task');
-updateCI.addEncodedQuery(‘sys_class_name=sc_request');
+
+//*UPDATE*
+var updateCI = new GlideRecord('task');
+updateCI.addEncodedQuery('sys_class_name=sc_request');
 updateCI.query();
 while(updateCI.next()){
-updateCI.sys_domain=‘atualização';
+updateCI.sys_domain='atualização';
 updateCI.setForceUpdate(true);
 updateCI.setWorkflow(false);
 updateCI.update();
 }
-notification=69313ec90f820200c816945f62050e89
-*DELETE*
+
+//*DELETE*
 var user = new GlideRecord('tabela'); 
 user.addEncodedQuery('condição'); 
-//user.setLimit('7000'); // Set limit so the query does not delete more users 
+user.setLimit('7000'); // Set limit so the query does not delete more users 
 user.query(); 
 gs.log('Number of users to be deleted-->'+user.getRowCount()); 
-//while(user.next()) 
-//{ 
-//user.deleteRecord(); 
-//} 
-***********************************************************************************************************************
+while(user.next()) { 
+    user.deleteRecord(); 
+} 
+//***********************************************************************************************************************
 //Excluir do formulário variáveis que estão vazias criar uma BR e um Client Script
 •   BUSINESS RULE
 var allVariables = [];
@@ -215,7 +211,7 @@ function hideVariables(){
           }
      }
 }
-***********************************************************************************************************************
+//***********************************************************************************************************************
 //Consumir um WS e tratar o retorno do XML
 try {
 var s = new sn_ws.SOAPMessageV2('Correios', 'consultaCEP');
@@ -235,7 +231,7 @@ action.setRedirectURL(current);
 catch(ex) {
 var message = ex.getMessage();
 }
-***********************************************************************************************************************
+//***********************************************************************************************************************
 //Desabilitar Protection Policy de Read only para None
 var gr = new GlideRecord("sys_metadata"); 
 gr.get("d1ea2bf1cb200200d71cb9c0c24c9c15"); 
@@ -243,27 +239,13 @@ gs.print(gr.sys_policy);
 gr.sys_policy=""; 
 gs.print(gr.sys_policy); 
 gr.update();
-3c1fe0f6d7032100b9bc43d60e610397
-***********************************************************************************************************************
+//***********************************************************************************************************************
 //Limpa variáveis do Variable Editor.
-•   Pegar o ID da variável no console
-•   Inserir o ID na função gel.
+//•   Pegar o ID da variável no console
+//•   Inserir o ID na função gel.
 var recordID = gel('variable_ni.QS7771b1c63720e2006929008993990ec2');
 recordID.style.display='none';
-***********************************************************************************************************************
-//PADRAO REUNIAO
-//Bom dia, por favor utilizem o link abaixo para conectar a reunião.
-https://servicenow.zoom.us/my/ricardo.linhart
-Obrigado
-Ricardo Linhart | Senior Technical Consultant
-ServiceNow   | Everything  as a Service
-(m) 55 11 99103 8194
-Jabber +14084507382
-Skypeid ricardo.linhart
-4002-5700
-Codigo da solicitação de Pontos AA - San Diego - S29279195
-Tempo Total - Pendenciamento
-***********************************************************************************************************************
+//***********************************************************************************************************************
 //Remover Label Variable 
 function onLoad() {
     if ($('variable_map'))
@@ -274,24 +256,6 @@ ________________________________________
 Readonly requested item variables
  g_form.setVariablesReadOnly(true);
 ***********************************************************************************************************************
-//Preenche Requested For com o Caller do catalogo
-function onBefore(current, previous) {
-    updateReqFor();
-    //NEED TO CHANGE IF WE HAVE SHOPPING CART
-    // Update Requested For
-    function updateReqFor() {
-        var req = new GlideRecord('sc_req_item');
-        req.addQuery('request', current.sys_id);
-        req.setLimit(1);
-        req.query();
-        while (req.next()) {
-            current.requested_for = req.variables.u_caller;
-            current.short_description = req.short_description;
-            current.description = req.description;
-            //current.short_description = req.short_description;
-        }
-    }
-}
 ________________________________________
 //Limpa Instancia
 doit("task_ci");
@@ -343,138 +307,6 @@ grProducer.script = script;
 grProducer.update();
 }
 ________________________________________
-Glide Ajax para coletar informações do usuário - Item de Catalogo
-Client Script:
-function onLoad() {
-     //Type appropriate comment here, and begin script below
-     var user = g_user.userID;
-     var infoUser = [];
-//     alert(user);
-     var ga = new GlideAjax('getUser');
-     ga.addParam('sysparm_name','getData');
-     ga.addParam('sysparm_userid',user);
-     ga.getXMLWait();
-     infoUser = ga.getAnswer().split(',');
-     g_form.setValue('variables.question_email_solicitante',infoUser[0]);
-     g_form.setValue('variables.question_centro_custo_contrato',infoUser[1]);
-     g_form.setValue('variables.question_area_cliente_operacao',infoUser[2]);
-     g_form.setValue('variables.question_cargo_solicitante',infoUser[3]);     
-     g_form.setReadOnly('variables.question_email_solicitante',true);
-     g_form.setReadOnly('variables.question_centro_custo_contrato',true);
-     g_form.setReadOnly('variables.question_area_cliente_operacao',true);
-     g_form.setReadOnly('variables.question_cargo_solicitante',true);     
-}
-Script Include:
-var getUser = Class.create();
-getUser.prototype = Object.extendsObject(AbstractAjaxProcessor,{
-    getData: function() {
-          var userID = this.getParameter('sysparm_userid');
-          var email = '';
-          var costCenter = '';
-          var clienteOperacao = '';
-          var area = '';
-          var title = '';
-          var userData = '';
-          var getInfo = new GlideRecord('sys_user');
-          getInfo.addEncodedQuery('sys_id='+userID);
-          getInfo.query();
-          if(getInfo.next()){
-          email=getInfo.email;
-          costCenter=getInfo.department.name;
-          clienteOperacao = getInfo.u_description;
-          area = getInfo.u_office;
-          title = getInfo.title;
-          }
-          var areaClientOperacao = area+'-'+clienteOperacao;
-          userData=(email+','+costCenter+','+areaClientOperacao+','+title);
-          gs.log('Dados: '+userData);
-          return userData;
-    },
-    type: 'getUser'
-});
-var user = nee GlideRecord(’sys_user’);
-user.addEncodedQuery('locked_out=true’);
-user.query();
-while(user.next()){
-user.locked_out=‘false’;
-user.update();
-}
-________________________________________
-Cancela Aprovação e RITM depois de X dias pendente de aprovação (requested)
-(function executeRule(current, previous /*null when async*/) {
-    var sidRitm = current.document_id.toString();
-    var item = '';
-    var getItem = new GlideRecord('sc_req_item');
-    getItem.addEncodedQuery('sys_id='+sidRitm);
-    getItem.query();
-    if (getItem.next()){
-        item = getItem.u_subcategoria_task;
-    }
-    if(item.toString()=='ee8afb1a6f45fac06bda17164b3ee426'){
-        var canceltime1 = gs.getProperty('glide.ui.request.cancel.time');
-        var pcanceltime1 = parseInt(canceltime1);
-        var dataAtual1 = new GlideDateTime();
-        dataAtual1.addDays(pcanceltime1);
-        if (pcanceltime1 > 0) {
-            //    var sidRitm = current.document_id.toString();
-            //var dataAtual = new GlideDateTime();
-            //dataAtual.addDays(7);
-            //dataAtual.addSeconds(300);
-            var scriptStr1 = "";
-            scriptStr1 += "\nvar gr = new GlideRecord('sysapproval_approver');";
-            //scriptStr += "\ngr.addEncodedQuery('state=requested^sys_id=" + sidRitm +"');";
-            scriptStr1 += "\ngr.addEncodedQuery('state=requested^sysapproval.sys_id=" + sidRitm +"');";
-            scriptStr1 += "\ngr.query();";
-            scriptStr1 += "\nif(gr.next()){";
-            scriptStr1 += "\n    gr.state = 'cancelled';";
-            scriptStr1 += "\n    gr.update();";
-            scriptStr1 += "\n}";
-            scriptStr1 += "\n\n";
-        }
-    }
-    else
-        {
-        var canceltime = gs.getProperty('glide.ui.request.cancel.time');
-        var pcanceltime = parseInt(canceltime);
-        var dataAtual = new GlideDateTime();
-        dataAtual.addDays(pcanceltime);
-        if (pcanceltime > 0) {
-            //    var sidRitm = current.document_id.toString();
-            var nome = "Aprovação automatica " + current.document_id.getDisplayValue() + " - Aprovador: " + current.approver.getDisplayValue();
-            //var dataAtual = new GlideDateTime();
-            //dataAtual.addDays(7);
-            //dataAtual.addSeconds(300);
-            var scriptStr = "";
-            scriptStr += "\nvar gr = new GlideRecord('sysapproval_approver');";
-            //scriptStr += "\ngr.addEncodedQuery('state=requested^sys_id=" + sidRitm +"');";
-            scriptStr += "\ngr.addEncodedQuery('state=requested^sysapproval.sys_id=" + sidRitm +"');";
-            scriptStr += "\ngr.query();";
-            scriptStr += "\nif(gr.next()){";
-            scriptStr += "\n    gr.state = 'cancelled';";
-            scriptStr += "\n    gr.update();";
-            scriptStr += "\n}";
-            scriptStr += "\n\n";
-            scriptStr += "\nvar gr2 = new GlideRecord('sc_req_item');";
-            //scriptStr += "\ngr2.addEncodedQuery('sys_id=" + sidRitm +"');";
-            scriptStr += "\ngr2.addEncodedQuery('state=100^sys_id=" + sidRitm +"');";
-            scriptStr += "\ngr2.query();";
-            scriptStr += "\nif(gr2.next()){";
-            scriptStr += "\n    gs.eventQueue('request.cancelamento.automatico', gr2, gr2.request.requested_for, gr2.request.requested_for.getDisplayValue());";
-            scriptStr += "\n    gr2.state = '400';";
-            scriptStr += "\n    gr2.comments = 'Cancelado por falta de aprovação, aprovador: "+ current.approver.getDisplayValue() +"';";
-            scriptStr += "\n    gr2.update();";
-            scriptStr += "\n}";
-            var gr = new GlideRecord('sys_trigger');
-            gr.initialize();
-            gr.name = nome;
-            gr.next_action = dataAtual;
-            gr.trigger_type = '0';
-            gr.script = scriptStr;
-            gr.insert();
-        }
-    }
-})(current, previous);
-________________________________________
 List Control - Omit new condition / Omit edit condition
 var answer = false;
 if ((parent.state == 6) || (parent.state == 7)|| (parent.state = 8)) {
@@ -511,44 +343,6 @@ function copyVariables(){
    newMtom.insert();  
    }  
 }  
-________________________________________
-Glide Ajax usando objeto como retorno
-ClientScript
-function onChange(control, oldValue, newValue, isLoading) {
-    if (isLoading || newValue == '') {
-        return;
-    }
-    var aluno = g_form.getValue('variables.nome');
-    alert(aluno);
-    var ga = new GlideAjax('AlunoUtils');
-    ga.addParam('sysparm_name','alunoEspecRA');
-    ga.addParam('sysparm_aluno',aluno);
-    ga.getXMLAnswer(getReturn);
-     function getReturn(response) {
-        var obj = JSON.parse(response);
-        g_form.setValue('variables.codigo_da_especialidade',obj.espec);
-        g_form.setValue('variables.codigo_do_aluno',obj.ra);
-     }
-}
-ScriptInclude
-var AlunoUtils = Class.create();
-AlunoUtils.prototype = Object.extendsObject(AbstractAjaxProcessor, {
-      alunoEspecRA: function() {
-        var customer = this.getParameter('sysparm_aluno');
-        var result = {};
-          gs.info('ALUNO: '+customer);
-        var getInfo = new GlideRecord('u_registro_academico');
-        getInfo.addEncodedQuery('sys_id='+customer);
-        getInfo.query();
-        if (getInfo.next()){
-            result.espec = getInfo.u_especialidade.toString();
-            result.ra = getInfo.u_ra.toString();            
-        }
-        var response = global.JSON.stringify(result);
-        return response;
-    },
-    type: 'AlunoUtils'
-});
 ________________________________________
 Instanciar Script Include (Scripts - Background)
 var sInclude = new SetBookmarks()
