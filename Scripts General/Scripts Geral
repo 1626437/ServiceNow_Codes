@@ -5,11 +5,11 @@ current.u_impacted_areas = impactedArea.getimpactedArea(current.cmdb_ci);
 current.update();
 gs.addInfoMessage(gs.getMessage('Impacted Areas Updated'));
 action.setRedirectURL(current); 
-***************************************************************************************************************************************
+//***************************************************************************************************************************************
 //Evidencia usuário VIP 
 Personalize Style(botão direita label)
 TABLE: <tablename>
-FIELD: <Caller>
+FIELD: <caller>
 VALUE: javascript:current.caller_id.vip == true
 STYLE
 background-image: url('images/icons/vip.gif');
@@ -33,119 +33,13 @@ The following script will clean these up. Run this as 'admin' from the "Scripts 
 gs.sql("DELETE FROM cmdb_ci WHERE sys_id = '6254dea20f187100ea81a218b1050e14' ");
 gs.sql("DELETE FROM cmdb_ci_hardware WHERE sys_id = '6254dea20f187100ea81a218b1050e14' ");
 gs.sql("DELETE FROM cmdb_ci_netgear WHERE sys_id = '6254dea20f187100ea81a218b1050e14' “);
-***************************************************************************************************************************************
-//Esconder as TABs de acordo com algum outro valor em algum campo
-function onChange(control, oldValue, newValue, isLoading) {
-     var sections = g_form.getSections();
-     if (newValue == '6'||newValue == '7') {
-          sections[3].style.display = 'block';
-     } else {
-          sections[3].style.display = 'none';
-     }
-}
-***************************************************************************************************************************************
-//ui policy para remover os valores dos campos.
-function onCondition() {    
-     g_form.removeOption('state',2);  //Work in Progress
-     g_form.removeOption('state',-5); //On Hold
-     g_form.removeOption('state',-3); //Request for Approval
-function onCondition() {
-     g_form.removeOption('type','Routine');
-     g_form.addOption('type','Comprehensive','Comprehensive');
-     g_form.addOption('type','Emergency','Emergency');
-     g_form.addOption('type','','');
-}
-***************************************************************************************************************************************
+
+//***************************************************************************************************************************************
 //Para pegar a ClassName da tabela task
-&& current.getRecordClassName() == 'incident' || current.getRecordClassName() == 'problem'
-Definir um grupo de designação no workflow
-var option = current.variables.access_select.toString();
-switch(option) {
-    case 'SAP_BI':
-        current.assignment_group.setDisplayValue('BI Security');
-        break;
-    case 'SAP_Transactions':
-        current.assignment_group.setDisplayValue('SAP Security');
-        break;
-    case 'TOTVS_Transactions':
-        current.assignment_group.setDisplayValue('ERP Latam Security');
-        break;
-    case 'Sofcrates_Transactions':
-        current.assignment_group.setDisplayValue('ERP Latam Security');
-        break;
-    case 'Network_Shared_Driver':
-        current.assignment_group.setDisplayValue('Global SD');
-        break;
-    case 'LIMS':
-        current.assignment_group.setDisplayValue('Global User Admin');
-        break;
-    case 'Other_Systems':
-        current.assignment_group.setDisplayValue('Global User Admin');
-        break;
-     case 'servicenow':
-        current.assignment_group.setDisplayValue('ServiceNow Administration Team');
-        break;
-     case 'reactivate_user_maternity_leave':
-        current.assignment_group.setDisplayValue('Global User Admin');
-        break;
-     case 'SAP_Emergency_Access':
-          current.assignment_group.setDisplayValue('SAP Emergency Access');
-          current.urgency.setDisplayValue('1 - High');
-          current.impact.setDisplayValue('3 - Low');
-        break;
-}
-current.short_description = 'Additional Access - ' + current.variables.access_select.getDisplayValue();
-function onSubmit() {
-var cat_id = gel('sysparm_item_guid').value;
-var gr = new GlideRecord("sys_attachment");
-gr.addQuery("table_name", "sc_cart_item");
-gr.addQuery("table_sys_id", cat_id);
-gr.query();
-if (!gr.next()) {
-alert("You must attach a request form");
-return false;
-}
+current.getRecordClassName() == 'incident' || current.getRecordClassName() == 'problem'
+
 ***************************************************************************************************************************************
-//Preenche campo telefone com o telefone de quem está abrindo o chamado
-function onChange(control, oldValue, newValue, isLoading, isTemplate) {
-   if (isLoading)
-      return;
-   if (newValue == '') {
-      g_form.setValue('caller_id', '');
-      return;
-   }
-   if (!g_form.getControl('caller_id'))
-      return;
-   var caller = g_form.getReference('caller_id', setPhone);
-}
-function setPhone(caller) {
-   if (caller)
-       g_form.setValue('u_callback_number', caller.phone);
-}
-/*Notificação periódica
-------------------------------------------------------------------------------------------------------------------------------------------------
-Description:
-Send notification for unnaproved requested items each 2 days
---------------------------------------------------------------------------------------------------------------------------------------------------
- */
-var gr = new GlideRecord ('sysapproval_approver');
-var now = new Date();
-var day = now.getDay();
-gr.addQuery('state', 'requested');
-gr.addQuery('sysapproval.sys_class_name', 'sc_req_item');
-gr.query();
-gs.log('** Automaticaly send e-mail 1**');
-var item = new GlideRecord ('sc_req_item');
-item.addQuery('sys_updated_on','<',gs.minutesAgo(10));
-item.query();
-while(gr.next())
-{
-     if(day!= 0 && day != 6)
-     {
-          gs.log('** Automaticaly send e-mail **');
-          gs.eventQueue("timely.notification", gr, gr.approver.getDisplayValue());
-     }
-}
+
 ***************************************************************************************************************************************
 //SCRIPT INCLUDE para filtrar um campo reference através de um campo choice associado a mesma tabela do reference.
 function filterSublocation(){
@@ -167,22 +61,13 @@ var gr = new GlideRecord('cmdb_ci');
 gr.addQuery(’sys_class_name', 'cmdb_ci');
 gr.query();
 gr.deleteMultiple();
-***************************************************************************************************************************************
-//Altera o conteúdo do campo para Upper Case
-function onChange(control, oldValue, newValue, isLoading, isTemplate) {
-   if (isLoading || newValue == '') {
-      return;
-   }  
-   var str = newValue.toUpperCase(); 
-   if (str != newValue) 
-  g_form.setValue('u_contact_name', str); 
-}
+
 ***************************************************************************************************************************************
 //Chamar um mail script na notificação
 ${mail_script:sapReplyTo}
 ${mail_script:attach_links}
 ***************************************************************************************************************************************
-Filtra Grupos em Fluxos
+//Filtra Grupos em Fluxos
 var userRegion = current.u_requester.location.u_region.toString();
 var userSubRegion = current.u_requester.location.u_sub_region.toString();
 var subRegion = userSubRegion.substring(0,5);
@@ -214,15 +99,7 @@ if (userRegion == '') {
           break;
      }
 }
-Preenche Valores na Requested Item na criação
-if (current.variables.company != '' && current.variables.company != undefined)
-current.company = current.variables.company;
-if (current.variables.comments != '' && current.variables.comments != undefined)
-current.comments = current.variables.comments;
-if (current.variables.short_description != '' && current.variables.short_description != undefined)
-current.short_description = current.variables.short_description;
-if (current.variables.description != '' && current.variables.description != undefined)
-current.description = current.variables.description;
+
 ***************************************************************************************************************************************
 //Preenche Requested For com usuário solicitante selecionado na Requested Item
 updateReqFor();
