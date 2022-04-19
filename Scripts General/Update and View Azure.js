@@ -345,9 +345,9 @@ var matrizLabels = [];
         }
     }
 
-    //Responsável por realizar a trativa de caracteres especiais ao pesquisar a Label
-    function encodeValueURL(str) {
-        return encodeURIComponent(str).replace(/['()]/g, escape).replace(/\*/g, '%2A').replace(/%(?:7C|60|5E)/g, unescape);
-    }
+//Responsável por realizar a trativa de caracteres especiais ao pesquisar a Label
+function encodeValueURL(str) {
+	return encodeURIComponent(str).replace(/['()]/g, escape).replace(/\*/g, '%2A').replace(/%(?:7C|60|5E)/g, unescape);
+}
 
     function creatPayload()
