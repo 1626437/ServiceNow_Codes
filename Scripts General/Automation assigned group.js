@@ -43,6 +43,7 @@ gr.addQuery("table_name", "sc_cart_item");
 gr.addQuery("table_sys_id", cat_id);
 gr.query();
 if (!gr.next()) {
-alert("You must attach a request form");
-return false;
+    alert("You must attach a request form");
+    return false;
+}
 }
