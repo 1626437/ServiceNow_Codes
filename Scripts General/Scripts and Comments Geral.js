@@ -286,7 +286,7 @@ var gr = new GlideRecord(table);
 gr.deleteMultiple();
 }
 ________________________________________
-//Estagios de um Process Flow
+/*Estagios de um Process Flow
 1. Create process flow formatter for incident table with following stages:
    - Stage should be "Incident Identification and Categorization" when state is New
    - Stage should be "Investigation and Diagnosis" when state is Active, Awaiting User Info or Awaiting Problem.
@@ -294,7 +294,8 @@ ________________________________________
    - Stage should be "Closure" when state is Closed.
 ***********************************************************************************************************************
 Usando o getClientData para pegar valores inseridos através de um server script. Nesse exemplo coletando o idioma através da BR.
-________________________________________
+_*/
+_______________________________________
 //Insere o sys_id do item de catalogo no campo Script do Record producer. Serve para passar o Sys ID do catalogo que ta end aberto para o 
 var queryFiltro = 'table_name=hr_case';
 var campoDaTabela = 'u_item';
