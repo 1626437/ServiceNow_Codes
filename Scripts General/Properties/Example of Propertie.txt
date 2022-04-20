@@ -1,0 +1,38 @@
+Cria propriedade para armazenar um de para de valores para ser utilizado um script:
+
+
+Name: cap.gestao_descarte.grupo_por_regional_operadora
+Type: String
+Options: ''
+Value: {
+    "TCO-DF": "A&I_BACKHAUL TCO",
+    "TCO-GO": "A&I_BACKHAUL TCSL",
+    "TCO-MS": "A&I_BACKHAUL TCSL",
+    "TCO-MT": "A&I_BACKHAUL TCSL",
+    "TCO-TO": "A&I_BACKHAUL TCSL",
+    "TCO-AC": "A&I_BACKHAUL TCSL",
+    "TCO-RO": "A&I_BACKHAUL TCSL",
+    "TLE-MG": "A&I_BACKHAUL TLE",
+    "TNE-BA": "A&I_BACKHAUL TBS",
+    "TNE-SE": "A&I_BACKHAUL TBS",
+    "TNE-AL": "A&I_BACKHAUL TNE",
+    "TNE-CE": "A&I_BACKHAUL TNE",
+    "TNE-PB": "A&I_BACKHAUL TNE",
+    "TNE-PE": "A&I_BACKHAUL TNE",
+    "TNE-PI": "A&I_BACKHAUL TNE",
+    "TNE-RN": "A&I_BACKHAUL TNE",
+    "TNO-PA": "A&I_BACKHAUL TNO",
+    "TNO-MA": "A&I_BACKHAUL TNO",
+    "TNO-AP": "A&I_BACKHAUL TNO",
+    "TNO-RR": "A&I_BACKHAUL TNO",
+    "TNO-AM": "A&I_BACKHAUL TNO",
+    "TRJ-RJ": "A&I_BACKHAUL TRJ",
+    "TRJ-ES": "A&I_BACKHAUL TRJ",
+    "TSP-SP": "A&I_BACKHAUL TSP",
+    "TSL-PR": "A&I_BACKHAUL TCSL",
+    "TSL-SC": "A&I_BACKHAUL TCSL",
+    "TSL-RS": "A&I_BACKHAUL TSL"
+}
+
+Description: Propriedade para obter grupo com base em UF e Regional Informada.
+Formato JSON. Necessário fazer parse para obter valor.
