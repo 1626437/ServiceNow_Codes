@@ -7,7 +7,9 @@ var uf = current.u_id_task.u_event.u_uf.getDisplayValue();
 //Campo onde armazena a Regional na TASK
 var reg = current.u_id_task.u_event.u_regional_do_endereco.getDisplayValue();
 
+ // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Obter grupo por operadora através da propriedade.
+ // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 var group_prop = gs.getProperty("cap.gestao_descarte.grupo_por_regional_operadora");
 var json_group_prop = JSON.parse(group_prop);
 var grp = json_group_prop[reg + "-" + uf];
