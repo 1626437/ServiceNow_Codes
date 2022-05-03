@@ -23,7 +23,7 @@ function getID(label) {
 	try {
 
 		//Variável que armazenará o endpoint + a label de pesquisa 
-		var urlGetLabel = "https://analytics.dev.azure.com/timbrasil/DEV%20-%20ServiceNow%20ITSM/_odata/v3.0-preview/WorkItems?&$filter=WorkItemType%20eq%20%27Entrega%27%20and%20Title%20eq%20%27" + labelresult + "%27%20&%20$select=WorkItemId,%20Title,%20WorkItemType,%20state";
+		var urlGetLabel = "https://analytics.dev.azure.com/{company}/{project}/_odata/v3.0-preview/WorkItems?&$filter=WorkItemType%20eq%20%27Entrega%27%20and%20Title%20eq%20%27" + labelresult + "%27%20&%20$select=WorkItemId,%20Title,%20WorkItemType,%20state";
 
 		//Inicia a comunicação com o Azure
 		var getLabel = new sn_ws.RESTMessageV2('global.API Azure', 'GET LABEL');
@@ -194,10 +194,10 @@ function updateLabel(idLabel, payload) {
 	try {
 
 		//Variável que armazenará o endpoint 
-		var urlGetLabel = "https://dev.azure.com/{company}/{project}/_apis/wit/workitems/" + idLabel + "?api-version=6.0";
+		var urlGetLabel = "https://dev.azure.com/{company}/_apis/wit/workitems/" + idLabel + "?api-version=6.0";
 
 		//Inicia a comunicação com o Azure da TIM
-		var getLabel = new sn_ws.RESTMessageV2('global.API Azure TIM', 'PATCH Label');
+		var getLabel = new sn_ws.RESTMessageV2('global.API Azure', 'PATCH Label');
 		getLabel.setEndpoint(urlGetLabel);
 		getLabel.setStringParameterNoEscape('payload', payload);
 		var response = getLabel.execute();
