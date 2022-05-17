@@ -2,7 +2,7 @@
 	//Check reference record
 	var debug = true;
 	var code = 'BDT Incident Update';
-	var u_integration = "TIM";
+	var u_integration = "Client";
 	var reference_id = "";
 	
 	var grRef = new GlideRecord("x_timps_bdt_reference_record");
@@ -26,11 +26,8 @@
 	var dataset = new BDT_Dataset();
 	obj = dataset.map(u_integration, "outbound", code, current);
     obj.integration = u_integration;
-	obj.producer = "BDT Integration TIM";
+	obj.producer = "BDT Integration";
 	obj.number = reference_id;
-	if(obj.assigned_to != '5fc7b2351b173050e9162170f54bcb6c' && obj.assigned_to != null && obj.assigned_to != undefined && obj.assigned_to != ""){
-		obj.assigned_to = '5750f9131b57345005e6dca0f54bcb38';
-	}
 	obj.variables = JSON.stringify(obj.variables);
     arr.push(obj);
     var data1 = JSON.stringify(arr);
@@ -45,3 +42,27 @@
 		gs.debug("BDT Integration: "+ ex.toString());
     }
 })(current, previous);
+
+
+var u_integration = "TIM";
+    var grRef = new GlideRecord("x_timps_bdt_reference_record");
+    grRef.addQuery('u_local_id', current.sys_id);
+    grRef.addQuery('u_integration', u_integration);
+    grRef.addQuery('u_table', current.sys_class_name);
+    grRef.query();
+    if (grRef.getRowCount() > 0) {
+        //Já existe um registro ativo para a integração. Saindo.
+        return;
+    }
+    // Add your code here
+    var obj = {};
+    var arr = [];
+    var dataset = new BDT_Dataset();
+    obj = dataset.map(u_integration, "outbound", "BDT Incident Create", current);
+    obj.integration = u_integration;
+    obj.producer = "BDT Integration TIM";
+    obj.reference_table = current.sys_class_name.toString();
+    obj.variables = JSON.stringify(obj.variables);
+    arr.push(obj);
+    var data1 = JSON.stringify(arr);
+    var pl = data1.substring(1, data1.length - 1);

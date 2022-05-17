@@ -1,0 +1,177 @@
+[
+    {
+        "number": "EVE220200019404",
+        "u_falha": "INDISPONIBILIDADE",
+        "state": "Concluido",
+        "u_data_da_validacao": "04/02/2022 09:13:42",
+        "u_tempo_stop_time": "",
+        "u_data_de_criacao": "03/02/2022 16:40:52",
+        "id_serviço": "VTACCNDKF076144",
+        "notas_de_fechamentos": [{
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "FIBRA ÓTICA | REDE EXTERNA",
+            "u_causa": "ATIVIDADE PROGRAMADA",
+            "u_solucao_falha": "ATIVIDADE PROGRAMADA CONCLUÍDA"
+        },{
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "FIBRA ÓTICA | REDE EXTERNA",
+            "u_causa": "ATIVIDADE PROGRAMADA",
+            "u_solucao_falha": "ATIVIDADE PROGRAMADA CONCLUÍDA"
+        },{
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "FIBRA ÓTICA | REDE EXTERNA",
+            "u_causa": "ATIVIDADE PROGRAMADA",
+            "u_solucao_falha": "ATIVIDADE PROGRAMADA CONCLUÍDA"
+        }]
+    },
+    {
+        "number": "EVE211100150526",
+        "u_falha": "Indisponibilidade",
+        "state": "Concluido",
+        "u_data_da_validacao": "25/11/2021 03:41:46",
+        "u_tempo_stop_time": "",
+        "u_data_de_criacao": "24/11/2021 12:18:55",
+        "id_serviço": "FLALVMDKF204102",
+        "notas_de_fechamentos": {
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "REDE DO CLIENTE",
+            "u_causa": "REDE INTERNA",
+            "u_solucao_falha": "AÇÃO DO CLIENTE EM REDE INTERNA"
+        }
+    },
+    {
+        "number": "EVE220100164161",
+        "u_falha": "Indisponibilidade",
+        "state": "Concluido",
+        "u_data_da_validacao": "23/01/2022 19:12:35",
+        "u_tempo_stop_time": "",
+        "u_data_de_criacao": "22/01/2022 01:56:10",
+        "id_serviço": "CTASPOCAP201166",
+        "notas_de_fechamentos": {
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "EQUIPAMENTO ÓPTICO",
+            "u_causa": "FALHA NÃO DIAGNOSTICADA",
+            "u_solucao_falha": "AUSÊNCIA DE HISTÓRICO OU ALARMES ATIVOS NO MOMENTO DA ANÁLISE"
+        }
+    },
+    {
+        "number": "EVE220200007145",
+        "u_falha": "INDISPONIBILIDADE",
+        "state": "Concluido",
+        "u_data_da_validacao": "01/02/2022 22:56:02",
+        "u_tempo_stop_time": "",
+        "u_data_de_criacao": "01/02/2022 22:26:11",
+        "id_serviço": "SPOBRUCAP270519",
+        "notas_de_fechamentos": {
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "EQUIPAMENTO ÓPTICO",
+            "u_causa": "FALHA NÃO DIAGNOSTICADA",
+            "u_solucao_falha": "AUSÊNCIA DE HISTÓRICO OU ALARMES ATIVOS NO MOMENTO DA ANÁLISE"
+        }
+    },
+    {
+        "number": "EVE220200012574",
+        "u_falha": "SERVIÇO INTERMITENTE",
+        "state": "Concluido",
+        "u_data_da_validacao": "02/02/2022 21:32:58",
+        "u_tempo_stop_time": "",
+        "u_data_de_criacao": "02/02/2022 15:58:28",
+        "id_serviço": "RJOSPODKF108221",
+        "notas_de_fechamentos": {
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "EQUIPAMENTO ÓPTICO",
+            "u_causa": "FALHA NÃO DIAGNOSTICADA",
+            "u_solucao_falha": "AUSÊNCIA DE HISTÓRICO OU ALARMES ATIVOS NO MOMENTO DA ANÁLISE"
+        }
+    },
+    {
+        "number": "EVE220100235378",
+        "u_falha": "ANÁLISE DE CAUSA RAIZ",
+        "state": "Concluido",
+        "u_data_da_validacao": "01/02/2022 12:55:48",
+        "u_tempo_stop_time": "",
+        "u_data_de_criacao": "31/01/2022 13:06:31",
+        "id_serviço": "RJOBHEDKF275139",
+        "notas_de_fechamentos": {
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "EQUIPAMENTO ÓPTICO",
+            "u_causa": "FALHA INTERMITENTE/INDETERMINADA/TERCEIROS",
+            "u_solucao_falha": "CORREÇÃO REALIZADA POR PROVEDOR DE SERVIÇO"
+        }
+    },
+    {
+        "number": "EVE220200003587",
+        "u_falha": "INDISPONIBILIDADE",
+        "state": "Concluido",
+        "u_data_da_validacao": "02/02/2022 07:12:26",
+        "u_tempo_stop_time": "",
+        "u_data_de_criacao": "01/02/2022 14:05:43",
+        "id_serviço": "SPORPOCAP065175",
+        "notas_de_fechamentos": {
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "FALHA INEXISTENTE",
+            "u_causa": "TESTADO E ENCONTRADO OK",
+            "u_solucao_falha": "SEM INDÍCIO DE FALHA NA REDE TIM"
+        }
+    },
+    {
+        "number": "EVE220100237108",
+        "u_falha": "INDISPONIBILIDADE",
+        "state": "Concluido",
+        "u_data_da_validacao": "31/01/2022 17:44:01",
+        "u_tempo_stop_time": "",
+        "u_data_de_criacao": "31/01/2022 16:03:01",
+        "id_serviço": "SPOEUFCAP112294",
+        "notas_de_fechamentos": {
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "EQUIPAMENTO ÓPTICO",
+            "u_causa": "FALHA INTERMITENTE/INDETERMINADA/TERCEIROS",
+            "u_solucao_falha": "NORMALIZAÇÃO SEM INTERVENÇÃO"
+        }
+    },
+    {
+        "number": "EVE220100235157",
+        "u_falha": "FALHA DE INFRAESTRUTURA",
+        "state": "Concluido",
+        "u_data_da_validacao": "01/02/2022 09:06:58",
+        "u_tempo_stop_time": "",
+        "u_data_de_criacao": "31/01/2022 12:31:42",
+        "id_serviço": "TUUMNSDKF074996",
+        "notas_de_fechamentos": {
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "EQUIPAMENTO ÓPTICO",
+            "u_causa": "FALHA EM EQUIPAMENTO",
+            "u_solucao_falha": "RESET FÍSICO/LÓGICO"
+        }
+    },
+    {
+        "number": "EVE220200001788",
+        "u_falha": "SERVIÇO INTERMITENTE",
+        "state": "Concluido",
+        "u_data_da_validacao": "01/02/2022 16:42:00",
+        "u_tempo_stop_time": "",
+        "u_data_de_criacao": "01/02/2022 09:42:27",
+        "id_serviço": "SPOEUSCAP112293",
+        "notas_de_fechamentos": {
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "EQUIPAMENTO ÓPTICO",
+            "u_causa": "FALHA NÃO DIAGNOSTICADA",
+            "u_solucao_falha": "AUSÊNCIA DE HISTÓRICO OU ALARMES ATIVOS NO MOMENTO DA ANÁLISE"
+        }
+    },
+    {
+        "number": "EVE220100212336",
+        "u_falha": "Indisponibilidade",
+        "state": "Concluido",
+        "u_data_da_validacao": "28/01/2022 21:10:48",
+        "u_tempo_stop_time": "",
+        "u_data_de_criacao": "28/01/2022 10:10:37",
+        "id_serviço": "STSSTSDKF108743",
+        "notas_de_fechamentos": {
+            "u_responsavel_pelo_defeito": "TIM",
+            "u_nota_de_fechamento": "FIBRA ÓTICA | REDE EXTERNA",
+            "u_causa": "FO QUEBRADA/ATENUADA EM CEO/DGO",
+            "u_solucao_falha": "FUSÃO DE FO/MANOBRA DE FO/NOVO ROTEAMENTO"
+        }
+    }
+]
