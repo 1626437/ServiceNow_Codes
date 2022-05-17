@@ -1,0 +1,40 @@
+*************************************************************************************
+        Cria propriedade para armazenar valores para ser utilizado no SCRIPT
+**************************************************************************************
+Name: query.table
+
+Type: String
+
+Description: Está propriedade é responsável por armazenar os filtros de condições para cada tabela que necessita consumir dados.
+Obs.: Alteração destes filtros acarretara mudanças no registros de Eventos que se encontra com falha e é enviado para o BPaas.
+
+Options: ''
+
+Value: {
+    "all": "sys_id=",
+    "u_ttm": "sys_updated_on>=javascript:gs.beginningOfLastMonth()^u_set_bpaas=false^state=8^RLQUERYu_notas_de_fechamento_de_tasks.u_ttm,>=1^u_responsavel_pelo_defeito=true^ENDRLQUERY",
+    "u_rede_dinamic_trail": "u_vinculado=Sim^u_evento=",
+    "u_notas_de_fechamento_de_tasks": "u_responsavel_pelo_defeito=true^u_solucionador_da_falha=1^u_ttm=",
+    "u_notas_de_fechamento_de_tasksPERSONALIZE":"u_task=",
+    "u_acionamento_provedor": "sys_updated_onONLast 3 months@javascript:gs.beginningOfLast3Months()@javascript:gs.endOfLast3Months()^u_responsavel_pela_falha=parceiro_provedor^u_status=3^u_set_bpaas=0^u_numero_do_eventoISNOTEMPTY^u_numero_da_tarefaISNOTEMPTY",
+    "u_trail": "u_evento="
+}
+
+----------------------------------------------------------------------------------
+
+Name: field.table
+
+Type: String
+
+Description: Está propriedade é responsável por armazenar os campos que serão consumidos da tabela origem para a montagem do Payload. Exemplo da estrutura:
+{
+<nome_tabela>: "<nome_campo_pro_payload> | <nome_tecnico_campo_na_tabela> ",
+}
+
+Options: ''
+
+Value: {
+    "u_ttm": "evento,falha,status,hora_criacao,data_validacao,stop_time | number,u_falha,state,sys_created_on,u_data_da_validacao,u_tempo_stop_time",
+    "u_notas_de_fechamento_de_tasks": "responsavel_defeito,causador_falha,acao_causadora,acao_solucao | u_responsavel_pelo_defeito,u_nota_de_fechamento,u_causa,u_solucao_falha",
+    "u_acionamento_provedor": "number,evento,ticket_provedor,nome_contrato,circuito,descrever_circuitos,status,data_abertura,data_normalizacao,tipo_provedor,provedor,stop_time,municipio_ponta_a,uf_ponta_a,municipio_ponta_b,uf_ponta_b,tipo_falha,responsavel_falha | u_number,u_numero_do_evento,u_numero_ticket_no_provedor,u_nome_do_contato,u_circuitos,u_add_circuito,u_status,u_data_hora_abertura_chamado_provedor,u_data_hora_confirmacao_da_normalizacao,u_tipo_de_provedor,u_nome_do_provedor,u_tempo_stop_time,u_municipio_ponta_a,u_uf_municipio_a,u_municipio_ponta_b,u_uf_municipio_b,u_tipo_falha,u_responsavel_pela_falha"
+  }

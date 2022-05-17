@@ -60,7 +60,7 @@
     var rec = new GlideRecord("x_cabs4_bdt_reference_record");
     var parentRec = new GlideRecord("x_cabs4_bdt_reference_record");
 
-    rec.addQuery("u_integration", "TIM_REQUEST");
+    rec.addQuery("u_integration", "REQUEST");
     rec.addQuery("u_reference_id", request.body.data.parent_id);
     rec.addNullQuery("u_local_id");
     rec.query();
@@ -83,7 +83,7 @@
     rec = new GlideRecord("x_cabs4_bdt_reference_record");
     parentRec = new GlideRecord("x_cabs4_bdt_reference_record");
 
-    rec.addQuery("u_integration", "TIM_REQUEST");
+    rec.addQuery("u_integration", "REQUEST");
     rec.addQuery("u_reference_id", request.body.data.parent_id);
     rec.addNotNullQuery("u_local_id");
     rec.query();
