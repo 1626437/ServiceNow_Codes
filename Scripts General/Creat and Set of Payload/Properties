@@ -37,4 +37,20 @@ Value: {
     "u_ttm": "evento,falha,status,hora_criacao,data_validacao,stop_time | number,u_falha,state,sys_created_on,u_data_da_validacao,u_tempo_stop_time",
     "u_notas_de_fechamento_de_tasks": "responsavel_defeito,causador_falha,acao_causadora,acao_solucao | u_responsavel_pelo_defeito,u_nota_de_fechamento,u_causa,u_solucao_falha",
     "u_acionamento_provedor": "number,evento,ticket_provedor,nome_contrato,circuito,descrever_circuitos,status,data_abertura,data_normalizacao,tipo_provedor,provedor,stop_time,municipio_ponta_a,uf_ponta_a,municipio_ponta_b,uf_ponta_b,tipo_falha,responsavel_falha | u_number,u_numero_do_evento,u_numero_ticket_no_provedor,u_nome_do_contato,u_circuitos,u_add_circuito,u_status,u_data_hora_abertura_chamado_provedor,u_data_hora_confirmacao_da_normalizacao,u_tipo_de_provedor,u_nome_do_provedor,u_tempo_stop_time,u_municipio_ponta_a,u_uf_municipio_a,u_municipio_ponta_b,u_uf_municipio_b,u_tipo_falha,u_responsavel_pela_falha"
-  }
+}
+
+----------------------------------------------------------------------------------
+
+Name: u_integration.filter.status_code
+
+Type: String
+
+Description: Propriedade para inserir os registro de integrações dependente da instância.
+Valores possíveis para o status de comunicação:
+200 = Comunicação com Sucesso
+400 = Possíveis falhas de parametrizações
+500 = Indisponibilidade na comunicação
+
+Options: ''
+
+Value: 200
