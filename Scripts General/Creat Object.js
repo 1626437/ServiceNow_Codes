@@ -21,7 +21,7 @@ gr.query();
 while (user.next()) {
     for (var i = 0; i < Object.keys(field.u_ttm).length; i++) {
         var field_name = Object.keys(field.u_ttm)[i];
-        var field_value = field.u_ttm[Object.keys(field.u_ttm)[i]]
+        var field_value = field.u_ttm[field_name];
         obj[field_name] = gr.getDisplayValue(field_value);
     }
 } 
