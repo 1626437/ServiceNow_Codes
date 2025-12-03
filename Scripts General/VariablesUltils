@@ -1,0 +1,182 @@
+var VariablesUltils = Class.create();
+VariablesUltils.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    copy: function(sourceSysId, targetSysId) {
+        var sourceGr = new GlideRecord('x_ibmgr_servicos_atendimento'); // Altere a tabela conforme necessário
+        if (sourceGr.get(sourceSysId)) {
+            var targetGr = new GlideRecord('x_ibmgr_servicos_atendimento'); // Altere a tabela conforme necessário
+            if (targetGr.get(targetSysId)) {
+                var variables = sourceGr.variables;
+                targetGr.is_parent = true;
+                for (var key in variables) {
+                    if (key != 'u_rd_record_id' && key != 'u_rd_task_n_complete' && key != 'u_rd_has_edite') {//Tratativa para não levar a váriavel auxiliar
+                        if (variables.hasOwnProperty(key)) {
+                            targetGr.variables[key] = variables[key];
+                        }
+                    }
+                }
+				targetGr.variables['u_rd_has_edite'] = 'no';
+				targetGr.no_consumption = true;
+				//targetGr.setJournalEntry("Realizado a atualização de váriaveis, através do fluxo automatizado", "admin");
+                targetGr.update();
+
+                return true;
+            }
+        }
+        return false;
+    },
+
+    create: function(sourceSysId, targetSysId) {
+        var tableName = 'x_ibmgr_servicos_atendimento';
+        var itemNew = new GlideRecord('question_answer');
+        itemNew.addEncodedQuery('table_sys_id=' + sourceSysId + '^table_name=' + tableName);
+        itemNew.orderBy('question.order');
+        itemNew.query();
+        var hasok = false;
+        while (itemNew.next()) { //Cria as váriaveis do PAI
+            //gs.addInfoMessage('Entra aqui e vai fazer com a variable: ' + itemNew.getValue('question'));
+            var questionAnswer = new GlideRecord('question_answer');
+            questionAnswer.initialize();
+            questionAnswer.question = itemNew.getValue('question');
+            questionAnswer.table_name = tableName;
+            questionAnswer.table_sys_id = targetSysId;
+            questionAnswer.value = itemNew.getValue('value');
+            questionAnswer.sys_class_name = itemNew.getValue('sys_class_name');
+            var result = questionAnswer.insert();
+            gs.info(result);
+            hasok = true;
+        }
+
+        return hasok;
+    },
+
+    delet: function(producer) {
+        var current = new GlideRecord('x_ibmgr_servicos_atendimento');
+        current.get(producer);
+
+        //Deleta Registro
+        current.deleteRecord();
+    },
+    // Função para copiar um Multi-Row Variable Set de um registro para outro
+    copyMultiRowVariables: function(sourceSysId, targetSysId, table) {
+        var sourceMRVS = new GlideRecord('sc_multi_row_question_answer');
+        sourceMRVS.addQuery('parent_id', sourceSysId); // Filtra pelo registro de origem
+        sourceMRVS.query();
+
+        while (sourceMRVS.next()) {
+            var newRow = new GlideRecord('sc_multi_row_question_answer');
+            newRow.initialize();
+			newRow.parent_table_name = table;
+            newRow.parent_id = targetSysId; // Associa a nova cópia ao registro de destino
+			newRow.question_answer = sourceMRVS.question_answer; //associa a questão
+            newRow.variable_set = sourceMRVS.variable_set; // Copia o conjunto de variáveis
+			newRow.item_option_new = sourceMRVS.item_option_new; // Copia o conjunto de variáveis
+            newRow.row_index = sourceMRVS.row_index; // Mantém a mesma ordem
+            newRow.value = sourceMRVS.value; // Copia os valores das colunas
+			
+            newRow.insert(); // Insere o novo conjunto de variáveis
+        }
+    },
+	copyVariables: function (fromSysID, toTable, toSysID, ignoreBlanks, ignoreQuestions, whichRecordProducer) {
+
+		//Example of usage
+		//new copyVariables().recordProducer('0af30e28dba0c0d03ea3cd051496193d', 'incident', 'b962dd24dba844d010a3a5840596199e', true, 'this_variable,that_variable,another_variable,u_affected_user','32bc1564db20c0d03ea3cd05149619f5')
+
+		//Note: this will NOT copy multi-row variable sets
+
+		fromSysID = gs.nil(fromSysID) ? this.getParameter('sysparm_fromSysID') : fromSysID;
+		toTable = gs.nil(toTable) ? this.getParameter('sysparm_toTable') : toTable;
+		toSysID = gs.nil(toSysID) ? this.getParameter('sysparm_toSysID') : toSysID;
+		ignoreBlanks = gs.nil(ignoreBlanks) ? this.getParameter('sysparm_ignoreBlanks') : ignoreBlanks;
+		ignoreQuestions = gs.nil(ignoreQuestions) ? this.getParameter('sysparm_ignoreQuestions') : ignoreQuestions;
+
+		ignoreQuestions = ignoreQuestions.split(','); //Form an array so we can distinguish between questions to ignore
+
+		var originalVar = new GlideRecord('question_answer');
+		originalVar.query('table_sys_id', fromSysID);
+
+		while (originalVar.next()) {
+
+			var question = originalVar.question.name.toString() || 'not-specified'; //getDisplayValue(); //<<== gets the question rather than the name
+			var questionType = originalVar.question.type.getDisplayValue();
+			var validFieldName = question != '';
+			var validValue = (!gs.nil(originalVar.value));
+
+			if (ignoreBlanks && !validValue && validFieldName && !(questionType == 'Container Start' || questionType == 'Container End')) {
+				//ignore variables without a valid value
+			} else {
+				//Ignore any sensitive fields 
+				var ignoreThis = ignoreQuestions.filter(function (thisQ) {
+					return thisQ == question;
+				}).length;
+
+				if (ignoreThis == 0 || questionType == 'Container Start' || questionType == 'Container End') {
+
+					var newVar = new GlideRecord('question_answer');
+					newVar.initialize();
+					newVar.setWorkflow(false);
+					newVar.autoSysFields(false);
+
+					for (var eachField in newVar) {
+						newVar[eachField] = originalVar[eachField];
+					}
+
+					newVar.table_name = toTable;
+					newVar.table_sys_id = toSysID;
+					var thisCopy = newVar.insert();
+
+					///////////////////////////////////////////////////////////////
+
+					var newRecordProd = new GlideRecord('sc_item_produced_record');
+					newRecordProd.initialize();
+					newRecordProd.setWorkflow(false);
+					newRecordProd.autoSysFields(false);
+
+					newRecordProd.producer = whichRecordProducer;
+					newRecordProd.record_table = toTable;
+					newRecordProd.record_key = toSysID;
+					newRecordProd.insert();
+				}
+			}
+		}
+	},
+
+	copyVariablesRITM: function (current, newRITM) {
+
+		var recMtom = new GlideRecord('sc_item_option_mtom');
+		recMtom.addQuery('request_item', current.sys_id);
+		recMtom.query();
+		while (recMtom.next()) {
+
+			var newMtom = new GlideRecord('sc_item_option_mtom');
+			newMtom.initialize();
+			newMtom.request_item = newRITM;
+			newMtom.sc_item_option = recMtom.sc_item_option;
+			newMtom.insert();
+		}
+	},
+
+	copyVariablesFromProducerToRITM: function (current, newRITM) {
+
+		var chmVar = new GlideRecord('question_answer');
+		chmVar.addQuery('table_sys_id', current.sys_id);
+		chmVar.query();
+		while (chmVar.next()) {
+			if (chmVar.value.getValue() != null) {
+				//} && chmVar.value.getValue() != 'false') {
+				var gr = new GlideRecord('sc_item_option');
+				gr.initialize();
+				gr.item_option_new = chmVar.question.getValue(); //ID da variável
+				gr.value = chmVar.value.getValue(); //Valor da variável
+				gr.order = chmVar.question.variable_set.toString() == '' ? chmVar.question.order.getValue() : chmVar.question.variable_set.order.toString();
+				gr.insert();
+
+				var newMtom = new GlideRecord('sc_item_option_mtom');
+				newMtom.initialize();
+				newMtom.request_item = newRITM; //ID da requisição - filho
+				newMtom.sc_item_option = gr.sys_id.getValue();
+				newMtom.insert();
+			}
+		}
+	},
+    type: 'VariablesUltils'
+});
