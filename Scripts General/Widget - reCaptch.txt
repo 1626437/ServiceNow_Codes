@@ -1,0 +1,68 @@
+-------> CODE HTML <-----------
+ <!--Codigo sobre capcth-->
+          <input id="sitekey" type="hidden" value={{c.data.captchaSiteKey}}>
+         <script>
+            var onloadCallback = function() {
+                var siteKey = jQuery("#sitekey").val();
+                var captchaVerified;
+                var captchaWidget;
+                var verifyCallback = function(grc) {
+                    if ((grc == "") || (grc == undefined))
+                        captchaVerified = false;
+                    else 
+                        captchaVerified = true;
+                    jQuery("#captchaVerified").attr("value", captchaVerified);
+                    CustomEvent.fireAll('sn_csm_captcha_verified', {captchaVerified: captchaVerified, grc: grc});
+                };
+                captchaWidget = grecaptcha.render('html_element', {
+                    'sitekey': siteKey,
+                    'callback': verifyCallback,
+                    'theme': 'light',
+                    'expired-callback': captchaExpired
+                });
+            };
+            var captchaExpired = function() {
+                captchaVerified = false;
+                jQuery("#captchaVerified").attr("value", captchaVerified);
+                CustomEvent.fireAll('sn_csm_captcha_verified', {captchaVerified: captchaVerified, grc: null});
+            };
+         </script>
+         <!-- Google Recaptcha -->
+         <div ng-if="data.enableCaptcha == 'true'" id="captcha_form_group" class="form-group">
+            <input ng-model="c.captchaVerified" type="checkbox" name="captchaVerified" id="captchaVerified" style="display:none;" class="form-control">
+            <label class="col-sm-2 control-label">${reCAPTCHA Verification:}</label>
+            <div class="col-sm-3">
+      <form action="?" method="POST">
+      <div class="g-recaptcha" id="html_element"></div>
+      <span class="help-block" id="retype_captcha"></span>
+      </form>
+      </div>
+      </div>
+
+---------> SERVER SCRIPT <----------
+
+data.captch_url = 'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=' + gs.getSession().getLanguage();
+    data.enableCaptcha = gs.getProperty('sn_customerservice.captchaEnabled');
+    data.captchaSiteKey = gs.getProperty('google.captcha.site_key');
+var trueCaptcha = new global.CSManagementUtils().verifyCaptcha(input.grc);
+        if (trueCaptcha) {
+		//LOGICA DO CÓDIGO DE AÇÃO APÓS QUE O RECAPTCH FICAR OK
+	}
+
+---------> CLIENT SCRIPT <----------
+    c.captchaVerified = false;
+
+
+    CustomEvent.observe('sn_csm_captcha_verified', function(obj) {
+        c.captchaVerified = obj.captchaVerified;
+        c.grc = obj.grc;
+        scope.$apply();
+    });
+
+   c.data.grc = c.grc;
+
+----------> LINK FUNCTION <----------
+function($document, $element) {
+    var tag = angular.element('<script/>').attr('src', "https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=" + g_lang).attr('defer', 'true').attr('async', 'true');
+    $element.append(tag);
+}
